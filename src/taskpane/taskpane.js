@@ -65,16 +65,11 @@ export async function enableSignout() {
     { id: "Starlight.LoginButton", enabled: false },
     { id: "Starlight.LogoutButton", enabled: true }
   ];
-  // const parentTab = { id: "Starlight.Tab1", groups: [ { id: "Starlight.Tab1.Group1", controls: buttonsToBeUpdated}] };
-  // const ribbonUpdater= { tabs: [parentTab] };
+  const parentTab = { id: "Starlight.Tab1", groups: [{ id: "Starlight.Tab1.Group1", controls: buttonsToBeUpdated }] };
+  const ribbonUpdater = { tabs: [parentTab] };
 
-  // let enabledButtonIds: string[] = ['Starlight.LoginButton', 'Starlight.AboutButton', 'Starlight.HelpButton'];
-  // const disabledButtonIds: string[] = ['Starlight.WidgetButton','Starlight.RefreshButton','Starlight.LogoutButton'];
 
-  // for ribbon buttons in manifest: trigger one setEnablement call
-  // await updateRibbon({ tabs: [{ id: 'Starlight.Tab1', controls: buttonsToBeUpdated }] });
-
-  const ribbonUpdater = { tabs: [{ id: 'Starlight.Tab1', controls: buttonsToBeUpdated }] };
+  // const ribbonUpdater = { tabs: [{ id: 'Starlight.Tab1', controls: buttonsToBeUpdated }] };
   try {
     await Office.ribbon.requestUpdate(ribbonUpdater);
   } catch (error) {
