@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Development add-in for landing page running on localhost.
+-->
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
+
+  <!-- Begin Basic Settings: Add-in metadata, used for all versions of Office unless override provided. -->
+
+  <!-- IMPORTANT! Id must be unique for your add-in, if you reuse this manifest ensure that you change this id to a new GUID. -->
+  <Id>936cdfe6-bcc5-44f2-9213-0d9ab9dc905d</Id>
+  <!--Version. Updates from the store only get triggered if there is a version change. -->
+  <Version>1.0.0.0</Version>
+  <ProviderName>SAP SE</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <!-- The display name of your add-in. Used on the store and various places of the Office UI such as the add-ins dialog. -->
+  <DisplayName DefaultValue="Office Beta" />
+  <Description DefaultValue="Use Microsoft PowerPoint's strengths to get deeper insights into your SAP Analytics Cloud data."/>
+  <!-- Icon for your add-in. Used on installation screens and the add-ins dialog. -->
+  <IconUrl DefaultValue="https://localhost:3000/assets/sap/icon-sap-32.png" />
+
+  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/sap/icon-sap-64.png" />
+
+  <SupportUrl DefaultValue="https://support.sap.com" />
+  <!-- Domains that will be allowed when navigating. For example, if you use ShowTaskpane and then have an href link, navigation will only be allowed if the domain is on this list. -->
+  <AppDomains>
+    <AppDomain>https://www.contoso.com</AppDomain>
+  </AppDomains>
+  <!--End Basic Settings. -->
+
+  <!--Begin TaskPane Mode integration. This section is used if there are no VersionOverrides or if the Office client version does not support add-in commands. -->
+  <Hosts>
+    <Host Name="Presentation" />
+  </Hosts>
+  <Requirements>
+    <Sets DefaultMinVersion="1.1">
+      <Set Name="PowerPointApi" MinVersion="1.1" />
+      <Set Name="SharedRuntime" MinVersion="1.1"/>
+    </Sets>
+  </Requirements>
+
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://localhost:3000/taskpane.html" />
+  </DefaultSettings>
+  <!-- End TaskPane Mode integration.  -->
+
+  <Permissions>ReadWriteDocument</Permissions>
+
+
+  <!-- Begin Add-in Commands Mode integration. -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+
+    <!-- The Hosts node is required. -->
+    <Hosts>
+      <!-- Each host can have a different set of commands. -->
+      <!-- Excel host is Workbook, Word host is Document, and PowerPoint host is Presentation. -->
+      <!-- Make sure the hosts you override match the hosts declared in the top section of the manifest. -->
+      <Host xsi:type="Presentation">
+        <Runtimes>
+          <Runtime resid="Starlight.SharedRuntime.Url" lifetime="long" />
+        </Runtimes>
+        <AllFormFactors>
+          <ExtensionPoint xsi:type="CustomFunctions">
+            <Script>
+              <SourceLocation resid="Functions.Script.Url" />
+            </Script>
+            <Page>
+              <SourceLocation resid="Starlight.SharedRuntime.Url" />
+            </Page>
+            <Metadata>
+              <SourceLocation resid="Functions.Metadata.Url" />
+            </Metadata>
+            <Namespace resid="Functions.Namespace" />
+          </ExtensionPoint>
+        </AllFormFactors>
+                <!-- Form factor. Currently only DesktopFormFactor is supported. -->
+        <DesktopFormFactor>
+          <!--"This code enables a customizable message to be displayed when the add-in is loaded successfully upon individual install."-->
+          <GetStarted>
+            <!-- Title of the Getting Started callout. The resid attribute points to a ShortString resource -->
+            <Title resid="Starlight.GetStarted.Title" />
+
+            <!-- Description of the Getting Started callout. resid points to a LongString resource -->
+            <Description resid="Starlight.GetStarted.Description" />
+
+            <!-- Points to a URL resource which details how the add-in should be used. -->
+            <LearnMoreUrl resid="Starlight.GetStarted.LearnUrl" />
+          </GetStarted>
+          <!-- Function file is a HTML page that includes the JavaScript where functions for ExecuteAction will be called.
+            Think of the FunctionFile as the code behind ExecuteFunction. -->
+          <FunctionFile resid="Starlight.SharedRuntime.Url" />
+
+          <!-- PrimaryCommandSurface is the main Office starlight. -->
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <CustomTab id="Starlight.Tab1">
+              <!--Group. Ensure you provide a unique id. Recommendation for any IDs is to namespace using your company name-->
+              <Group id="Starlight.Tab1.Group1">
+                <!--Label for your group. resid must point to a ShortString resource -->
+                <Label resid="Starlight.Tab1.GroupLabel" />
+                <Icon>
+                  <!-- Sample Todo: Each size needs its own icon resource or it will look distorted when resized -->
+                  <!--Icons. Required sizes 16,31,80, optional 20, 24, 40, 48, 64. Strongly recommended to provide all sizes for great UX -->
+                  <!--Use PNG icons and remember that all URLs on the resources section must use HTTPS -->
+                  <bt:Image size="16" resid="Starlight.ButtonDesigner.Icon.16" />
+                  <bt:Image size="32" resid="Starlight.ButtonDesigner.Icon.32" />
+                  <bt:Image size="80" resid="Starlight.ButtonDesigner.Icon.80" />
+                </Icon>
+                <Control xsi:type="Button" id="Starlight.LoginButton">
+                  <!--Label for your button. resid must point to a ShortString resource -->
+                  <Label resid="Starlight.ButtonLogin.Label" />
+                  <Supertip>
+                    <!--ToolTip title. resid must point to a ShortString resource -->
+                    <Title resid="Starlight.ButtonLogin.Label" />
+                    <!--ToolTip description. resid must point to a LongString resource -->
+                    <Description resid="Starlight.ButtonLogin.Tooltip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Starlight.ButtonLogin.Icon.16" />
+                    <bt:Image size="32" resid="Starlight.ButtonLogin.Icon.32" />
+                    <bt:Image size="80" resid="Starlight.ButtonLogin.Icon.80" />
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>Office.AutoShowTaskpaneWithDocument</TaskpaneId>
+                    <!--Provide a url resource id for the location that will be displayed on the task pane -->
+                    <SourceLocation resid="Starlight.SharedRuntime.Url" />
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="Starlight.LogoutButton">
+                  <!--Label for your button. resid must point to a ShortString resource -->
+                  <Label resid="Starlight.ButtonLogout.Label" />
+                  <Supertip>
+                    <!--ToolTip title. resid must point to a ShortString resource -->
+                    <Title resid="Starlight.ButtonLogout.Label" />
+                    <!--ToolTip description. resid must point to a LongString resource -->
+                    <Description resid="Starlight.ButtonLogout.Tooltip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Starlight.ButtonLogout.Icon.16" />
+                    <bt:Image size="32" resid="Starlight.ButtonLogout.Icon.32" />
+                    <bt:Image size="80" resid="Starlight.ButtonLogout.Icon.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>executeButtonClick</FunctionName>
+                  </Action>
+                  <Enabled>false</Enabled>
+                </Control>
+              </Group>              
+              <Group id="Starlight.Tab1.Config">
+                <Label resid="Starlight.Tab1.ConfigLabel" />
+                <Icon>
+                  <bt:Image size="16" resid="Starlight.TaskpaneButton.Icon.16" />
+                  <bt:Image size="32" resid="Starlight.TaskpaneButton.Icon.32" />
+                  <bt:Image size="80" resid="Starlight.TaskpaneButton.Icon.80" />
+                </Icon>
+                <Control xsi:type="Button" id="Starlight.ConfigButton">
+                  <Label resid="Starlight.ConfigButton.Label" />
+                  <Supertip>
+                    <Title resid="Starlight.ConfigButton.Label" />
+                    <Description resid="Starlight.ConfigButton.Tooltip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Starlight.TaskpaneButton.Icon.16" />
+                    <bt:Image size="32" resid="Starlight.TaskpaneButton.Icon.32" />
+                    <bt:Image size="80" resid="Starlight.TaskpaneButton.Icon.80" />
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>Starlight.ConfigPane</TaskpaneId>
+                    <SourceLocation resid="Starlight.Config.Url" />
+                  </Action>
+                </Control>
+              </Group>
+                            <!-- Label of your tab -->
+              <!-- If validating with XSD it needs to be at the end, we might change this before release -->
+              <Label resid="Starlight.Tab1.TabLabel" />
+            </CustomTab>
+          </ExtensionPoint>
+
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <!-- You can use resources across hosts and form factors. -->
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Starlight.ButtonDesigner.Icon.16" DefaultValue="https://localhost:3000/assets/icon-builder-16.png"/>
+        <bt:Image id="Starlight.ButtonDesigner.Icon.32" DefaultValue="https://localhost:3000/assets/icon-builder-32.png"/>
+        <bt:Image id="Starlight.ButtonDesigner.Icon.80" DefaultValue="https://localhost:3000/assets/icon-builder-80.png"/>
+        <bt:Image id="Starlight.ButtonLogin.Icon.16" DefaultValue="https://localhost:3000/assets/icon-login-16.png"/>
+        <bt:Image id="Starlight.ButtonLogin.Icon.32" DefaultValue="https://localhost:3000/assets/icon-login-32.png"/>
+        <bt:Image id="Starlight.ButtonLogin.Icon.80" DefaultValue="https://localhost:3000/assets/icon-login-80.png"/>
+        <bt:Image id="Starlight.ButtonLogout.Icon.16" DefaultValue="https://localhost:3000/assets/icon-logout-16.png"/>
+        <bt:Image id="Starlight.ButtonLogout.Icon.32" DefaultValue="https://localhost:3000/assets/icon-logout-32.png"/>
+        <bt:Image id="Starlight.ButtonLogout.Icon.80" DefaultValue="https://localhost:3000/assets/icon-logout-80.png"/>
+        <bt:Image id="Starlight.ButtonAbout.Icon.16" DefaultValue="https://localhost:3000/assets/icon-about-16.png" />
+        <bt:Image id="Starlight.ButtonAbout.Icon.32" DefaultValue="https://localhost:3000/assets/icon-about-32.png" />
+        <bt:Image id="Starlight.ButtonAbout.Icon.80" DefaultValue="https://localhost:3000/assets/icon-about-80.png" />
+        <bt:Image id="Starlight.TaskpaneButton.Icon.16" DefaultValue="https://localhost:3000/assets/icon-builder-16.png" />
+        <bt:Image id="Starlight.TaskpaneButton.Icon.32" DefaultValue="https://localhost:3000/assets/icon-builder-32.png" />
+        <bt:Image id="Starlight.TaskpaneButton.Icon.80" DefaultValue="https://localhost:3000/assets/icon-builder-80.png" />
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="Starlight.SharedRuntime.Url" DefaultValue="https://localhost:3000/taskpane.html" />
+        <bt:Url id="Starlight.Config.Url" DefaultValue="https://localhost:3000/#/configurationPage" />
+        <bt:Url id="Starlight.GetStarted.LearnUrl" DefaultValue="https://saphanajourney.com/sap-analytics-cloud/" />
+        <bt:Url id="Functions.Script.Url" DefaultValue="https://localhost:3000/function-file/functions.js" />
+        <bt:Url id="Functions.Metadata.Url" DefaultValue="https://localhost:3000/function-file/functions.json" />
+      </bt:Urls>
+      <!-- ShortStrings max characters==125. -->
+      <bt:ShortStrings>
+        <bt:String id="Starlight.GetStarted.Title" DefaultValue="Welcome to SAP Analytics Cloud!"/>
+        <bt:String id="Starlight.Tab1.TabLabel" DefaultValue="Office Beta" />
+        <bt:String id="Starlight.Tab1.ConfigLabel" DefaultValue="Config" />
+        <bt:String id="Starlight.ConfigButton.Label" DefaultValue="Configuration" />
+        <bt:String id="Starlight.Tab1.GroupLabel" DefaultValue="Sign-In" />
+        <bt:String id="Starlight.ButtonLogin.Label" DefaultValue="Sign In" />
+        <bt:String id="Starlight.ButtonLogout.Label" DefaultValue="Sign Out"/>
+        <bt:String id="Starlight.Tab1.GroupData.Label" DefaultValue="Data"></bt:String>
+        <bt:String id="Starlight.Tab1.HelpLabel" DefaultValue="Help"></bt:String>
+        <bt:String id="Starlight.ButtonAbout.Label" DefaultValue="About"></bt:String>
+        <bt:String id="Starlight.Tab1.WidgetLabel" DefaultValue="Widget"></bt:String>
+      </bt:ShortStrings>
+      <!-- LongStrings max characters==250. -->
+      <bt:LongStrings>
+        <bt:String id="Starlight.GetStarted.Description" DefaultValue=" " />
+        <bt:String id="Starlight.ConfigButton.Tooltip" DefaultValue="Show Configuration Page" />
+        <bt:String id="Starlight.ButtonLogin.Tooltip" DefaultValue=" " />
+        <bt:String id="Starlight.ButtonLogout.Tooltip" DefaultValue=" " />
+        <bt:String id="Starlight.ButtonAbout.Tooltip" DefaultValue=" "/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+    <!-- End Add-in Commands Mode integration. -->
+
+</OfficeApp>
