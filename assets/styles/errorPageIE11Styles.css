@@ -1,0 +1,54 @@
+.errorPageI11Container {
+    padding: 0 8px 0 8px;
+    display: block;
+}
+
+.errorImage {
+    position: relative;
+    text-align: center;
+    margin: 15px 0 20px 0;
+    height: 300px;
+}
+
+.innerTextSection {
+    width: 98%;
+    text-align: center;
+    margin: 15px 30px 20px 0;
+    position: relative;
+    min-height: 1px;
+    font-family: 'Microsoft Yahei UI',
+    'Verdana',
+    'Segoe UI',
+    -apple-system,
+    'BlinkMacSystemFont',
+    'Helvetica Neue',
+    sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+    color: #333333;
+    display: block
+}
+
+.versionNotSupported {
+    font-family: 'Microsoft Yahei UI',
+    'Verdana',
+    'Segoe UI',
+    -apple-system,
+    'BlinkMacSystemFont',
+    'Helvetica Neue',
+    sans-serif;
+    font-weight: normal;
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333333;
+}
+.messageText {
+    font-size: medium;
+    color: #333333;
+    margin-bottom: 14px;
+    white-space: pre-line;
+    text-align: left
+}
+
